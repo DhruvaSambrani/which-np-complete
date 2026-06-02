@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which NP-Complete Problem Are You?</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            
+            --blue-result: #3b82f6;
+            --green-result: #10b981;
+            --yellow-result: #f59e0b;
+            --red-result: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #app {
+            background-color: var(--card-bg);
+            max-width: 600px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .step {
+            display: none;
+            padding: 40px 30px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            background-color: #2dd4bf0d;
+            border: 2px solid #334155;
+            color: var(--text-main);
+            padding: 16px 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            line-height: 1.5;
+        }
+
+        .option-btn:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .result-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .result-desc {
+            text-align: left;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .restart-btn {
+            display: block;
+            width: 100%;
+            background-color: #334155;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background 0.2s;
+        }
+
+        .restart-btn:hover {
+            background-color: #475569;
+        }
+
+        /* Result-specific text colors */
+        .color-blue { color: var(--blue-result); }
+        .color-green { color: var(--green-result); }
+        .color-yellow { color: var(--yellow-result); }
+        .color-red { color: var(--red-result); }
+
+        .progress {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- START SCREEN -->
+        <div id="start" class="step active">
+            <h1>🧠 Which NP-Complete Problem Are You?</h1>
+            <p>To find your true algorithmic identity, we have to dig past the math and get into your deep-seated psychological quirks, coping mechanisms, and social habits. <br><br>Ready to discover which of the 4 classic computational problems is secretly running your brain?</p>
+            <button class="option-btn" style="text-align: center; font-weight: bold; background-color: var(--primary); border-color: var(--primary);" onclick="goTo('q1')">Begin the Descent</button>
+        </div>
+
+        <!-- QUESTION 1 -->
+        <div id="q1" class="step">
+            <div class="progress">Question 1 / 3</div>
+            <h2>How do you generally experience the feeling of "stress"?</h2>
+            <button class="option-btn" onclick="goTo('q2')">As a feeling of strict limitation—there are too many demands, too many options, and simply not enough of <i>me</i> (time/energy) to go around.</button>
+            <button class="option-btn" onclick="goTo('q3')">As a feeling of tangled chaos—where fixing one problem accidentally triggers a chain reaction that breaks something else.</button>
+        </div>
+
+        <!-- QUESTION 2 -->
+        <div id="q2" class="step">
+            <div class="progress">Question 2 / 3</div>
+            <h2>You are staring down a completely chaotic, disastrously messy room that you have to clean today. What is your strategy?</h2>
+            <button class="option-btn" onclick="goTo('q4')">I look for the 3 or 4 largest, most impactful items (making the bed, clearing the desk). Once those broad strokes are handled, the room is "done enough."</button>
+            <button class="option-btn" onclick="goTo('q5')">I start evaluating the worth of my belongings. If an item doesn't have a distinct purpose or I don't have space for it, it goes straight into the trash.</button>
+        </div>
+
+        <!-- QUESTION 3 -->
+        <div id="q3" class="step">
+            <div class="progress">Question 2 / 3</div>
+            <h2>Two of your friends are having a massive, dramatic falling out, and you are caught in the middle. What is your internal monologue?</h2>
+            <button class="option-btn" onclick="goTo('q6')">"I need to carefully set boundaries. I will hang out with them separately so I don't get dragged into the crossfire."</button>
+            <button class="option-btn" onclick="goTo('q7')">"Wait, if she said X happened on Tuesday, but he did Y on Wednesday, then her story doesn't make sense because of Z..."</button>
+        </div>
+
+        <!-- QUESTION 4 -->
+        <div id="q4" class="step">
+            <div class="progress">Question 3 / 3</div>
+            <h2>You are planning a vacation to a region with dozens of cool landmarks. What is your itinerary style?</h2>
+            <button class="option-btn" onclick="goTo('res-green')">I want to pick one strategic "basecamp" (like a central hotel or transit hub) that gives me access to the maximum number of tourist sites without having to move my luggage.</button>
+            <button class="option-btn" onclick="goTo('res-blue')">I meticulously calculate exactly how much time I should spend at each location. I want to extract the maximum amount of joy out of my limited 72 hours.</button>
+        </div>
+
+        <!-- QUESTION 5 -->
+        <div id="q5" class="step">
+            <div class="progress">Question 3 / 3</div>
+            <h2>You’re at a high-end buffet, but the restaurant has given you a notoriously tiny plate. How do you operate?</h2>
+            <button class="option-btn" onclick="goTo('res-blue')">I ignore the bread, pasta, and salad entirely. If space is limited, I am loading up strictly on the most expensive meats and delicacies to get my money's worth.</button>
+            <button class="option-btn" onclick="goTo('res-yellow')">I take a little bit of several things, but I arrange them with intense precision so that the foods do not touch and the sauces absolutely do not mix.</button>
+        </div>
+
+        <!-- QUESTION 6 -->
+        <div id="q6" class="step">
+            <div class="progress">Question 3 / 3</div>
+            <h2>You are forced to design the seating chart for a highly volatile wedding reception.</h2>
+            <button class="option-btn" onclick="goTo('res-yellow')">I am laser-focused on isolation. My only goal is making sure the divorced parents, the awkward exes, and the feuding cousins are seated at completely different tables.</button>
+            <button class="option-btn" onclick="goTo('res-red')">I obsess over satisfying everyone's ridiculous conditional demands. ("Aunt Mary must sit near a window, but cannot sit near Bob, who must sit near the bar...")</button>
+        </div>
+
+        <!-- QUESTION 7 -->
+        <div id="q7" class="step">
+            <div class="progress">Question 3 / 3</div>
+            <h2>You are forced to read a complicated legal contract or a dense rulebook.</h2>
+            <button class="option-btn" onclick="goTo('res-red')">I actually find myself fascinated by the loopholes and the rigid logic of it—the endless web of "IF this happens, AND this happens, OR that happens..."</button>
+            <button class="option-btn" onclick="goTo('res-green')">I skim aggressively. I am just looking for the two or three "umbrella" clauses that actually affect my daily life, and I completely ignore the rest.</button>
+        </div>
+
+
+        <!-- RESULTS -->
+
+        <!-- RESULT: BLUE (KNAPSACK) -->
+        <div id="res-blue" class="step">
+            <span class="result-icon">🟦🎒</span>
+            <div class="progress">Your Result</div>
+            <h1 class="result-title color-blue">THE CURATOR<br><span style="font-size:1.2rem; color:var(--text-muted)">The Knapsack Problem</span></h1>
+            <p class="result-desc">You are deeply, psychologically obsessed with <strong>capacity and value</strong>. In computer science, this problem is about fitting the most valuable items into a backpack with a strict weight limit.<br><br>In life, you suffer from acute awareness of your limited resources (time, money, social battery). You hate "filler." You are constantly doing mental math to figure out if a movie, a purchase, or a relationship is "worth the investment." You have strict boundaries, and you ruthlessly curate your life to maximize joy within those limits. You are practical, decisive, and allergic to wasting time.</p>
+            <button class="restart-btn" onclick="goTo('start')">Retake the Quiz</button>
+        </div>
+
+        <!-- RESULT: GREEN (SET COVER) -->
+        <div id="res-green" class="step">
+            <span class="result-icon">🟩☔</span>
+            <div class="progress">Your Result</div>
+            <h1 class="result-title color-green">THE UMBRELLA<br><span style="font-size:1.2rem; color:var(--text-muted)">The Set Cover Problem</span></h1>
+            <p class="result-desc">You are the master of <strong>efficiency and redundancy-elimination</strong>. This algorithm asks: <i>What is the absolute minimum number of sets I need to cover all the items?</i><br><br>You apply this to everything. You buy clothes that match multiple outfits. You combine your errands geographically. At work, you figure out the path of least resistance that still accomplishes 100% of the requirements. You aren't lazy; you are just a strategic minimalist. You detest doing the same work twice, and you are a genius at finding the "hack" that solves five problems with one action.</p>
+            <button class="restart-btn" onclick="goTo('start')">Retake the Quiz</button>
+        </div>
+
+        <!-- RESULT: YELLOW (GRAPH COLORING) -->
+        <div id="res-yellow" class="step">
+            <span class="result-icon">🟨🎨</span>
+            <div class="progress">Your Result</div>
+            <h1 class="result-title color-yellow">THE DIPLOMAT<br><span style="font-size:1.2rem; color:var(--text-muted)">The Graph Coloring Problem</span></h1>
+            <p class="result-desc">You are highly sensitive to <strong>clashes and compartmentalization</strong>. Graph coloring is about assigning colors to a web of nodes so that no two connected nodes share the same color.<br><br>In your daily life, you are constantly managing boundaries. You don't like it when your work friends mix with your party friends. You hate it when your food touches on the plate. You are an aesthetic and social harmonizer. You view the world as a delicate ecosystem, and your superpower is knowing exactly how to arrange people, tasks, and environments so that nothing rubs against each other the wrong way.</p>
+            <button class="restart-btn" onclick="goTo('start')">Retake the Quiz</button>
+        </div>
+
+        <!-- RESULT: RED (3-SAT) -->
+        <div id="res-red" class="step">
+            <span class="result-icon">🟥⚖️</span>
+            <div class="progress">Your Result</div>
+            <h1 class="result-title color-red">THE OVERTHINKER<br><span style="font-size:1.2rem; color:var(--text-muted)">Boolean Satisfiability (3-SAT)</span></h1>
+            <p class="result-desc">You are the parent of all complex logic, driven by <strong>conditions and contradictions</strong>. 3-SAT is about looking at a massive, tangled web of AND/OR/NOT statements and trying to find the one scenario that makes them all TRUE.<br><br>Your brain is a supercomputer that naturally sees the domino effect of every choice. You are prone to analysis paralysis because you know that choosing A means giving up B, which forces C to happen. You are the ultimate truth-seeker, loophole-finder, and rule-follower. When things don't logically add up, it physically bothers you—but when you finally solve a complex life puzzle, the satisfaction is euphoric.</p>
+            <button class="restart-btn" onclick="goTo('start')">Retake the Quiz</button>
+        </div>
+
+    </div>
+
+    <script>
+        function goTo(stepId) {
+            // Hide all steps
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(step => {
+                step.classList.remove('active');
+            });
+
+            // Show the target step
+            const target = document.getElementById(stepId);
+            if (target) {
+                target.classList.add('active');
+            }
+            
+            // Scroll to top of the card smoothly if on mobile
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
